@@ -1,3 +1,6 @@
+import javax.swing.*;
+import java.awt.*;
+
 public class Character {
     private String name;
     private int hp;
@@ -7,8 +10,18 @@ public class Character {
     private Item[] items;
     private int level;
     private int exp;
-    private int[][] location;
     private String img;
+
+    static JPanel characterPanel = new JPanel();
+
+    static int[][] location = new int[7][7];
+
+    public void makeLocation() {
+        characterPanel.setBounds(Frame.WIDTH / 2 - 7 * Frame.HEIGHT / 16, Frame.HEIGHT / 8,
+                7 * Frame.HEIGHT / 8, 7 * Frame.HEIGHT / 8);
+        characterPanel.setBackground(new Color(248, 207, 117));
+        characterPanel.setVisible(true);
+    }
 
     public String getName() {
         return name;
@@ -72,14 +85,6 @@ public class Character {
 
     public void setExp(int exp) {
         this.exp = exp;
-    }
-
-    public int[][] getLocation() {
-        return location;
-    }
-
-    public void setLocation(int[][] location) {
-        this.location = location;
     }
 
     public String getImg() {
