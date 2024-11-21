@@ -7,4 +7,6 @@ class MessageUtils {
     public static String getMessage() {
         return "Hello      World!";
     }
+
+    public static String message(){return "my name is park";}
 }
