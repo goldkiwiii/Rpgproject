@@ -95,4 +95,7 @@ public class Character {
     public void setImg(String img) {
         this.img = img;
     }
+
+
+
 }
