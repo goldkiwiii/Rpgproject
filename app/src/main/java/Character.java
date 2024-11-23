@@ -16,11 +16,12 @@ public class Character {
 
     static int[][] location = new int[7][7];
 
-    public void makeLocation() {
-        characterPanel.setBounds(Frame.WIDTH / 2 - 7 * Frame.HEIGHT / 16, Frame.HEIGHT / 8,
-                7 * Frame.HEIGHT / 8, 7 * Frame.HEIGHT / 8);
-        characterPanel.setBackground(new Color(248, 207, 117));
+    public JPanel makeLocation() {
+        characterPanel.setBounds(MainFrame.WIDTH / 7, MainFrame.HEIGHT / 7,
+                5 * MainFrame.HEIGHT / 7, 5 * MainFrame.HEIGHT / 7);
+        characterPanel.setBackground(new Color(100, 10, 55));
         characterPanel.setVisible(true);
+        return characterPanel;
     }
 
     public String getName() {
