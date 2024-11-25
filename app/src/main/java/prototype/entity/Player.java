@@ -25,7 +25,7 @@ public class Player extends Entity{
         direction = "down";
     }
     public void getPlayerImage(){
-        try{
+        try{//load player image in res file
             up1 = ImageIO.read(getClass().getResourceAsStream("/player/boy_up_1.png"));
             up2 = ImageIO.read(getClass().getResourceAsStream("/player/boy_up_2.png"));
             down1 = ImageIO.read(getClass().getResourceAsStream("/player/boy_down_1.png"));
@@ -41,7 +41,7 @@ public class Player extends Entity{
         }
     }
     public void update(){
-        if (keyH.upPressed == true || keyH.downPressed == true || keyH.leftPressed == true ||keyH.rightPressed == true) {
+        if (keyH.upPressed == true || keyH.downPressed == true || keyH.leftPressed == true ||keyH.rightPressed == true) {// when key pushed
             //location information update
             if (keyH.upPressed == true) {
                 direction = "up";

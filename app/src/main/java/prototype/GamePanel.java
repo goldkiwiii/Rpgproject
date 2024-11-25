@@ -1,6 +1,7 @@
 package prototype;
 
 import prototype.entity.Player;
+import prototype.tile.TileManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,14 +12,15 @@ public class GamePanel extends JPanel implements Runnable{
     final int scale = 3; // 3 sclae
 
     public final int tileSize = originalTileSize * scale; // 48 x 48 TileSize
-    final int maxScreenCol = 16; //width Size
-    final int maxScreenRow = 12; //Height Size
+    public final int maxScreenCol = 16; //width Size
+    public final int maxScreenRow = 12; //Height Size
     //width x heigth 4:3 Ratio
     final int screenWidth = tileSize * maxScreenCol;//768 px
     final int screenHeight = tileSize * maxScreenRow;//578 px
     //fps
 
     int FPS = 60;//frame per secconds
+    TileManager tileM = new TileManager(this);
     KeyHandler keyH = new KeyHandler();
     Thread gameThread;
     Player player = new Player(this, keyH);
@@ -81,12 +83,12 @@ public class GamePanel extends JPanel implements Runnable{
         //Graphics Class have many method
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D)g;
-
+        tileM.draw(g2);
         player.draw(g2);
 
-        g2.setColor(Color.GREEN);
-        g2.setFont(new Font("Arial", Font.PLAIN, 12));
-        g2.drawString("FPS: " + FPS, 10, 20);
+        g2.setColor(Color.green);
+        g2.setFont(new Font("Arial", Font.PLAIN, 15));
+        g2.drawString("FPS: " + FPS, 10, 25);
         g2.drawString("Map name: " + Mapname, 10, 10);
         g2.dispose();
         //for memory eco
