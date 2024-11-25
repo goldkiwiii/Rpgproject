@@ -1,5 +1,7 @@
 package prototype;
 
+import prototype.entity.Player;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -8,7 +10,7 @@ public class GamePanel extends JPanel implements Runnable{
     final int originalTileSize = 16; // 16 x 16 real TileSize
     final int scale = 3; // 3 sclae
 
-    final int tileSize = originalTileSize * scale; // 48 x 48 TileSize
+    public final int tileSize = originalTileSize * scale; // 48 x 48 TileSize
     final int maxScreenCol = 16; //width Size
     final int maxScreenRow = 12; //Height Size
     //width x heigth 4:3 Ratio
@@ -19,11 +21,11 @@ public class GamePanel extends JPanel implements Runnable{
     int FPS = 60;//frame per secconds
     KeyHandler keyH = new KeyHandler();
     Thread gameThread;
+    Player player = new Player(this, keyH);
 
     //set player's default position
-    int playerX = 100;
-    int playerY = 100;
-    int playerSpeed = 4;
+    String Mapname = "DomitoryRoom";
+
     public GamePanel(){
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setBackground(Color.BLACK);
@@ -32,10 +34,8 @@ public class GamePanel extends JPanel implements Runnable{
         this.setFocusable(true);//GamePanel can be "focused" to receive key input
     }
     public void startGameThread(){
-
         gameThread = new Thread(this);
         gameThread.start();
-
     }
 
 
@@ -45,19 +45,28 @@ public class GamePanel extends JPanel implements Runnable{
         double delta = 0; // currentFrmae, lastFrame delta value
         long lastTime = System.nanoTime();
         long currentTime;
+        long timer = 0;
+        int drawCount = 0;
 
     // start update() -> repatin() -> nextDraw(start)
         //allocated Time is 0.01666sec
 
         while(gameThread != null){
             currentTime = System.nanoTime();// currentTime bring nanotime
+
             delta += (currentTime - lastTime) / drawInterval;// f
+            timer += (currentTime - lastTime);
             lastTime = currentTime;// pre time update
             if (delta >= 1) {//
                 update();
                 repaint();
                 delta--;
+                drawCount++;
+            }
 
+            if (timer >= 1000000000){
+                drawCount = 0;
+                timer = 0;
             }
             //Why Using thread?
             //1. UPDATE: character's information(ex, x,y) updating
@@ -65,26 +74,20 @@ public class GamePanel extends JPanel implements Runnable{
         }
     }
     public void update(){
-        //location information update
-        if (keyH.upPressed == true){
-            playerY -= playerSpeed;
-        } else if (keyH.downPressed == true) {
-            playerY += playerSpeed;
-        }
-        else if(keyH.leftPressed == true){
-            playerX -= playerSpeed;
-        } else if (keyH.rightPressed == true) {
-            playerX += playerSpeed;
-        }
-
+        player.update();
     }
+
     public void paintComponent(Graphics g){
         //Graphics Class have many method
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D)g;
-        g2.setColor(Color.white);
-        g2.fillRect(playerX, playerY, tileSize, tileSize);
 
+        player.draw(g2);
+
+        g2.setColor(Color.GREEN);
+        g2.setFont(new Font("Arial", Font.PLAIN, 12));
+        g2.drawString("FPS: " + FPS, 10, 20);
+        g2.drawString("Map name: " + Mapname, 10, 10);
         g2.dispose();
         //for memory eco
     }
