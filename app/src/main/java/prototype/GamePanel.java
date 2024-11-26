@@ -15,15 +15,23 @@ public class GamePanel extends JPanel implements Runnable{
     public final int maxScreenCol = 16; //width Size
     public final int maxScreenRow = 12; //Height Size
     //width x heigth 4:3 Ratio
-    final int screenWidth = tileSize * maxScreenCol;//768 px
-    final int screenHeight = tileSize * maxScreenRow;//578 px
+    public final int screenWidth = tileSize * maxScreenCol;//768 px
+    public final int screenHeight = tileSize * maxScreenRow;//578 px
+
+    //world setting
+    public final int maxWorldCol = 50;
+    public final int maxWorldRow = 50;
+    public final int worldWidth = tileSize * maxWorldCol; //
+    public final int worldHeight = tileSize * maxWorldRow;
+
+
     //fps
 
     int FPS = 60;//frame per secconds
     TileManager tileM = new TileManager(this);
     KeyHandler keyH = new KeyHandler();
     Thread gameThread;
-    Player player = new Player(this, keyH);
+    public Player player = new Player(this, keyH);
 
     //set player's default position
     String Mapname = "DomitoryRoom";
@@ -50,7 +58,7 @@ public class GamePanel extends JPanel implements Runnable{
         long timer = 0;
         int drawCount = 0;
 
-    // start update() -> repatin() -> nextDraw(start)
+        // start update() -> repaint() -> nextDraw(start)
         //allocated Time is 0.01666sec
 
         while(gameThread != null){
@@ -59,7 +67,7 @@ public class GamePanel extends JPanel implements Runnable{
             delta += (currentTime - lastTime) / drawInterval;// f
             timer += (currentTime - lastTime);
             lastTime = currentTime;// pre time update
-            if (delta >= 1) {//
+            if (delta >= 1) {
                 update();
                 repaint();
                 delta--;
