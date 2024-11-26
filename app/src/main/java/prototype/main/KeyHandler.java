@@ -1,4 +1,4 @@
-package prototype;
+package prototype.main;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -14,22 +14,21 @@ public class KeyHandler implements KeyListener {
     public void keyPressed(KeyEvent e) {
 
         int code = e.getKeyCode();
-        //키보드 입력 받아오는 변수
 
         if(code == KeyEvent.VK_UP){
-            //UP 버튼이 눌렸을 때
+            //when UP button pushed
             upPressed = true;
         }
         if(code == KeyEvent.VK_DOWN){
-            //DOWN 버튼이 눌렸을 때
+            //when down button pushed
             downPressed = true;
         }
         if(code == KeyEvent.VK_LEFT){
-            //LEFT 버튼이 눌렸을 때
+            //when left button pushed
             leftPressed = true;
         }
         if(code == KeyEvent.VK_RIGHT){
-            //RIGHT 버튼이 눌렸을 때
+            //when right button pushed
             rightPressed = true;
         }
     }
@@ -37,22 +36,20 @@ public class KeyHandler implements KeyListener {
     @Override
     public void keyReleased(KeyEvent e) {
         int code = e.getKeyCode();
-        //키보드 입력 받아오는 변수
-
         if(code == KeyEvent.VK_UP){
-            //UP 버튼이 떼어졌을 때
+            //when UP button not pushed
             upPressed = false;
         }
         if(code == KeyEvent.VK_DOWN){
-            //DOWN 버튼이 떼어졌을  때
+            //when Down button not pushed
             downPressed = false;
         }
         if(code == KeyEvent.VK_LEFT){
-            //LEFT 버튼이 떼어졌을  때
+            //when left button not pushed
             leftPressed = false;
         }
         if(code == KeyEvent.VK_RIGHT){
-            //RIGHT 버튼이 떼어졌을  때
+            //when right button not pushed
             rightPressed = false;
         }
     }

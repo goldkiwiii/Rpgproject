@@ -1,6 +1,8 @@
-package prototype;
+package prototype.main;
 
 import prototype.entity.Player;
+import prototype.object.OBJ_Chest;
+import prototype.object.SuperObject;
 import prototype.tile.TileManager;
 
 import javax.swing.*;
@@ -31,7 +33,10 @@ public class GamePanel extends JPanel implements Runnable{
     TileManager tileM = new TileManager(this);
     KeyHandler keyH = new KeyHandler();
     Thread gameThread;
+    public CollisionChecker cChecker = new CollisionChecker(this);
+    public AssetSetter aSetter = new AssetSetter(this);
     public Player player = new Player(this, keyH);
+    public SuperObject obj[] = new SuperObject[10];
 
     //set player's default position
     String Mapname = "DomitoryRoom";
@@ -43,6 +48,11 @@ public class GamePanel extends JPanel implements Runnable{
         this.addKeyListener(keyH);
         this.setFocusable(true);//GamePanel can be "focused" to receive key input
     }
+
+    public void setUpGame() {
+        aSetter.setObject();
+    }
+
     public void startGameThread(){
         gameThread = new Thread(this);
         gameThread.start();
@@ -91,12 +101,20 @@ public class GamePanel extends JPanel implements Runnable{
         //Graphics Class have many method
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D)g;
+        //Tile
         tileM.draw(g2);
+        for (int i = 0; i < obj.length; i++) {
+        if (obj[i] != null){
+            obj[i].draw(g2, this);
+        }
+        }
+
+        //Player
         player.draw(g2);
+
 
         g2.setColor(Color.green);
         g2.setFont(new Font("Arial", Font.PLAIN, 15));
-        g2.drawString("FPS: " + FPS, 10, 25);
         g2.drawString("Map name: " + Mapname, 10, 10);
         g2.dispose();
         //for memory eco

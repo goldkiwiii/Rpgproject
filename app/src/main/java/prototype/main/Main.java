@@ -1,4 +1,6 @@
-package prototype;
+package prototype.main;
+
+import prototype.main.GamePanel;
 
 import javax.swing.*;
 
@@ -19,6 +21,7 @@ public class Main {
         window.setLocationRelativeTo(null);
         window.setVisible(true);
 
+        gamePanel.setUpGame();
         gamePanel.startGameThread();
 
     }
