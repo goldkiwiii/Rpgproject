@@ -2,9 +2,10 @@ package prototype.main;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.security.Key;
 
 public class KeyHandler implements KeyListener {
-    public boolean upPressed, downPressed, leftPressed, rightPressed;
+    public boolean upPressed, downPressed, leftPressed, rightPressed, ePressed;
 
     @Override
     public void keyTyped(KeyEvent e) {
@@ -15,6 +16,10 @@ public class KeyHandler implements KeyListener {
 
         int code = e.getKeyCode();
 
+
+        if (code == KeyEvent.VK_E){
+            ePressed = true;
+        }
         if(code == KeyEvent.VK_UP){
             //when UP button pushed
             upPressed = true;
@@ -36,6 +41,9 @@ public class KeyHandler implements KeyListener {
     @Override
     public void keyReleased(KeyEvent e) {
         int code = e.getKeyCode();
+        if (code == KeyEvent.VK_E){
+            ePressed = false;
+        }
         if(code == KeyEvent.VK_UP){
             //when UP button not pushed
             upPressed = false;
