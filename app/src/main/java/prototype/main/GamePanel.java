@@ -1,5 +1,6 @@
 package prototype.main;
 
+import prototype.entity.Entity;
 import prototype.entity.Player;
 import prototype.object.OBJ_Chest;
 import prototype.object.SuperObject;
@@ -31,12 +32,18 @@ public class GamePanel extends JPanel implements Runnable{
 
     int FPS = 60;//frame per secconds
     TileManager tileM = new TileManager(this);
-    KeyHandler keyH = new KeyHandler();
+    KeyHandler keyH = new KeyHandler(this);
+    public UI ui = new UI(this);
     Thread gameThread;
     public CollisionChecker cChecker = new CollisionChecker(this);
     public AssetSetter aSetter = new AssetSetter(this);
     public Player player = new Player(this, keyH);
     public SuperObject obj[] = new SuperObject[10];
+    public Entity npc[] = new Entity[10];
+    //GameState
+    public int gameState;
+    public final int playState = 1;
+    public final int pauseState = 2;
 
     //set player's default position
     String Mapname = "DomitoryRoom";
@@ -51,6 +58,8 @@ public class GamePanel extends JPanel implements Runnable{
 
     public void setUpGame() {
         aSetter.setObject();
+        aSetter.setNPC();
+        gameState = playState;
     }
 
     public void startGameThread(){
@@ -89,14 +98,25 @@ public class GamePanel extends JPanel implements Runnable{
                 timer = 0;
             }
             //Why Using thread?
-            //1. UPDATE: character's information(ex, x,y) updating
+            //1. UPDATE: character's location information(ex, x,y) updating
             //2. DRAW: updated map's information repainting
         }
     }
-    public void update(){
-        player.update();
-    }
+    public void update() {
+        if (gameState == playState) {
+            //PLAYER
+            player.update();
+            //NPC
+            for (int i =0; i< npc.length; i++){
+                if (npc[i] != null){
+                    npc[i].update();
+                }
+            }
+        }
+        if (gameState == pauseState){
 
+        }
+    }
     public void paintComponent(Graphics g){
         //Graphics Class have many method
         super.paintComponent(g);
@@ -108,14 +128,19 @@ public class GamePanel extends JPanel implements Runnable{
             obj[i].draw(g2, this);
         }
         }
-
+        //NPC
+        for (int i = 0 ;i < obj.length; i++){
+            if (npc[i] != null){
+                npc[i].draw(g2);
+            }
+        }
         //Player
         player.draw(g2);
+        //UI
+        ui.draw(g2);
 
 
-        g2.setColor(Color.green);
-        g2.setFont(new Font("Arial", Font.PLAIN, 15));
-        g2.drawString("Map name: " + Mapname, 10, 10);
+
         g2.dispose();
         //for memory eco
     }

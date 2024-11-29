@@ -2,10 +2,12 @@ package prototype.entity;
 
 import prototype.main.GamePanel;
 import prototype.main.KeyHandler;
+import prototype.main.UtilityTool;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
 import java.io.IOException;
 
 public class Player extends Entity{
@@ -13,9 +15,10 @@ public class Player extends Entity{
     KeyHandler keyH;
     public final int screenX;
     public final int screenY;
-    int hasKey = 0;
-
+    int standCounter = 0;
+    public int hasKey = 0;
     public Player(GamePanel gp, KeyHandler keyH){
+        super(gp);
         this.gp = gp;
         this.keyH = keyH;
         screenX = gp.screenWidth/2 - (gp.tileSize/2); // show camera view for main character
@@ -38,20 +41,30 @@ public class Player extends Entity{
         direction = "down";
     }
     public void getPlayerImage(){
-        try{//load player image in res file
-            up1 = ImageIO.read(getClass().getResourceAsStream("/player/boy_up_1.png"));
-            up2 = ImageIO.read(getClass().getResourceAsStream("/player/boy_up_2.png"));
-            down1 = ImageIO.read(getClass().getResourceAsStream("/player/boy_down_1.png"));
-            down2 = ImageIO.read(getClass().getResourceAsStream("/player/boy_down_2.png"));
-            left1 = ImageIO.read(getClass().getResourceAsStream("/player/boy_left_1.png"));
-            left2 = ImageIO.read(getClass().getResourceAsStream("/player/boy_left_2.png"));
-            right1 = ImageIO.read(getClass().getResourceAsStream("/player/boy_right_1.png"));
-            right2 = ImageIO.read(getClass().getResourceAsStream("/player/boy_right_2.png"));
+     //load player image in res file
+            up1 = setup("/player/boy_up_1");
+            up2 = setup("/player/boy_up_2");
+            down1 = setup("/player/boy_down_1");
+            down2 = setup("/player/boy_down_2");
+            left1 = setup("/player/boy_left_1");
+            left2 = setup("/player/boy_left_2");
+            right1 = setup("/player/boy_right_1");
+            right2 = setup("/player/boy_right_2");
 
-        }
-        catch (IOException e){
+
+    }
+    public BufferedImage setup(String imageName){
+        UtilityTool uTool = new UtilityTool();
+        BufferedImage image = null;
+        try {
+            image = ImageIO.read(getClass().getResourceAsStream(imageName + ".png"));
+            image = uTool.scaleImage(image, gp.tileSize, gp.tileSize);
+
+
+        }catch (IOException e){
             e.printStackTrace();
         }
+        return image;
     }
     public void update(){
         if (keyH.upPressed == true || keyH.downPressed == true || keyH.leftPressed == true ||keyH.rightPressed == true) {// when key pushed
@@ -72,6 +85,9 @@ public class Player extends Entity{
             //check object Collision
             int ObjIndex =  gp.cChecker.checkObject(this, true);
             pickUpObject(ObjIndex);
+            ///Check NPC collision
+            int npcIndex = gp.cChecker.checkEntity(this, gp.npc);
+            interactNPC(npcIndex);
             //when pass not solid area
             if (collisionOn == false){
 
@@ -103,22 +119,16 @@ public class Player extends Entity{
     }
     public void pickUpObject(int i) {
         if (i != 999) {
-//        didnt touch any object
-            String objectName = gp.obj[i].name;
-            switch (objectName) {
-                case "Key":
-                    hasKey++;
-                    gp.obj[i] = null;
-                    System.out.println("Key:" + hasKey);
-                    break;
-                case "Door":
-                    if (hasKey > 0) {
-                        gp.obj[i] = null;
-                        hasKey--;
-                    }
-                    break;
-            }
+//
         }
+    }
+    public void interactNPC(int i){
+        if (i != 999) {
+            System.out.println("you are hitting NPC");
+        }
+
+
+
     }
     public void draw(Graphics2D g2){
         //describe walking
@@ -157,7 +167,6 @@ public class Player extends Entity{
                 }
                 break;
         }
-        g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
-
+        g2.drawImage(image, screenX, screenY, null);
     }
 }
