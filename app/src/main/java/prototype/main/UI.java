@@ -44,7 +44,6 @@ public class UI {
 
         g2.drawString(text, x, y);
 
-
     }
     public int getXforCenteredText(String text){
         int length = (int)g2.getFontMetrics().getStringBounds(text, g2).getWidth();
