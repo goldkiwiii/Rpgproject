@@ -32,6 +32,7 @@ public class GamePanel extends JPanel implements Runnable{
     int FPS = 60;//frame per secconds
     TileManager tileM = new TileManager(this);
     KeyHandler keyH = new KeyHandler();
+    public UI ui = new UI(this);
     Thread gameThread;
     public CollisionChecker cChecker = new CollisionChecker(this);
     public AssetSetter aSetter = new AssetSetter(this);
@@ -89,7 +90,7 @@ public class GamePanel extends JPanel implements Runnable{
                 timer = 0;
             }
             //Why Using thread?
-            //1. UPDATE: character's information(ex, x,y) updating
+            //1. UPDATE: character's location information(ex, x,y) updating
             //2. DRAW: updated map's information repainting
         }
     }
@@ -111,11 +112,11 @@ public class GamePanel extends JPanel implements Runnable{
 
         //Player
         player.draw(g2);
+        //UI
+        ui.draw(g2);
 
 
-        g2.setColor(Color.green);
-        g2.setFont(new Font("Arial", Font.PLAIN, 15));
-        g2.drawString("Map name: " + Mapname, 10, 10);
+
         g2.dispose();
         //for memory eco
     }
