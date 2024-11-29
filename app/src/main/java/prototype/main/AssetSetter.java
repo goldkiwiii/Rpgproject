@@ -1,5 +1,6 @@
 package prototype.main;
 
+import prototype.entity.NPC_OldMan;
 import prototype.object.OBJ_Chest;
 import prototype.object.OBJ_Door;
 import prototype.object.OBJ_Key;
@@ -25,8 +26,8 @@ public class AssetSetter {
         gp.obj[2].worldY = 8 * gp.tileSize;
     }
     public void setNPC(){
-////        gp.npc[0] = new NPC_OldMan(gp);
-//        gp.npc[0].worldX = gp.tileSize * 21;
-//        gp.npc[0].worldY = gp.tileSize * 21;
+        gp.npc[0] = new NPC_OldMan(gp);
+        gp.npc[0].worldX = gp.tileSize * 21;
+        gp.npc[0].worldY = gp.tileSize * 21;
     }
 }
