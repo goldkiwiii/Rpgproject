@@ -1,5 +1,3 @@
-package calculator;
-
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.Arrays;

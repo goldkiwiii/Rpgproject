@@ -5,8 +5,13 @@ import java.awt.event.KeyListener;
 import java.security.Key;
 
 public class KeyHandler implements KeyListener {
+    GamePanel gp;
     public boolean upPressed, downPressed, leftPressed, rightPressed, ePressed;
 
+    boolean checkDrawTime = false;
+    public KeyHandler(GamePanel gp){
+        this.gp = gp;
+    }
     @Override
     public void keyTyped(KeyEvent e) {
     }
@@ -19,6 +24,15 @@ public class KeyHandler implements KeyListener {
 
         if (code == KeyEvent.VK_E){
             ePressed = true;
+        }
+        if (code == KeyEvent.VK_P){
+            if (gp.gameState == gp.playState) {
+                gp.gameState = gp.pauseState;
+            } else if (gp.gameState == gp.pauseState) {
+                gp.gameState = gp.playState;
+
+
+            }
         }
         if(code == KeyEvent.VK_UP){
             //when UP button pushed
@@ -44,6 +58,7 @@ public class KeyHandler implements KeyListener {
         if (code == KeyEvent.VK_E){
             ePressed = false;
         }
+
         if(code == KeyEvent.VK_UP){
             //when UP button not pushed
             upPressed = false;

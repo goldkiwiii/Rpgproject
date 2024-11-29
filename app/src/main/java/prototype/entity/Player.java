@@ -15,9 +15,10 @@ public class Player extends Entity{
     KeyHandler keyH;
     public final int screenX;
     public final int screenY;
+    int standCounter = 0;
     public int hasKey = 0;
-
     public Player(GamePanel gp, KeyHandler keyH){
+        super(gp);
         this.gp = gp;
         this.keyH = keyH;
         screenX = gp.screenWidth/2 - (gp.tileSize/2); // show camera view for main character
@@ -41,14 +42,14 @@ public class Player extends Entity{
     }
     public void getPlayerImage(){
      //load player image in res file
-            up1 = setup("boy_up_1");
-            up2 = setup("boy_up_2");
-            down1 = setup("boy_down_1");
-            down2 = setup("boy_down_2");
-            left1 = setup("boy_left_1");
-            left2 = setup("boy_left_2");
-            right1 = setup("boy_right_1");
-            right2 = setup("boy_right_2");
+            up1 = setup("/player/boy_up_1");
+            up2 = setup("/player/boy_up_2");
+            down1 = setup("/player/boy_down_1");
+            down2 = setup("/player/boy_down_2");
+            left1 = setup("/player/boy_left_1");
+            left2 = setup("/player/boy_left_2");
+            right1 = setup("/player/boy_right_1");
+            right2 = setup("/player/boy_right_2");
 
 
     }
@@ -56,7 +57,7 @@ public class Player extends Entity{
         UtilityTool uTool = new UtilityTool();
         BufferedImage image = null;
         try {
-            image = ImageIO.read(getClass().getResourceAsStream("/player/" + imageName + ".png"));
+            image = ImageIO.read(getClass().getResourceAsStream(imageName + ".png"));
             image = uTool.scaleImage(image, gp.tileSize, gp.tileSize);
 
 
@@ -84,6 +85,9 @@ public class Player extends Entity{
             //check object Collision
             int ObjIndex =  gp.cChecker.checkObject(this, true);
             pickUpObject(ObjIndex);
+            ///Check NPC collision
+            int npcIndex = gp.cChecker.checkEntity(this, gp.npc);
+            interactNPC(npcIndex);
             //when pass not solid area
             if (collisionOn == false){
 
@@ -115,30 +119,16 @@ public class Player extends Entity{
     }
     public void pickUpObject(int i) {
         if (i != 999) {
-//        didnt touch any object
-            String objectName = gp.obj[i].name;
-            switch (objectName) {
-                case "Key":
-                    hasKey++;
-                    gp.obj[i] = null;
-                    gp.ui.showMessage("You got a Key!");
-                    break;
-                case "Door":
-                    if (hasKey > 0) {
-                        gp.obj[i] = null;
-                        hasKey--;
-                        gp.ui.showMessage("You Opened the door!");
-                    }
-                    else {
-                        gp.ui.showMessage("You need a Key!");
-                    }
-                    break;
-                case "Chest":
-                    if (keyH.ePressed){
-                        gp.ui.showMessage("I think it won't be yet..");
-                    }
-            }
+//
         }
+    }
+    public void interactNPC(int i){
+        if (i != 999) {
+            System.out.println("you are hitting NPC");
+        }
+
+
+
     }
     public void draw(Graphics2D g2){
         //describe walking
@@ -178,6 +168,5 @@ public class Player extends Entity{
                 break;
         }
         g2.drawImage(image, screenX, screenY, null);
-
     }
 }

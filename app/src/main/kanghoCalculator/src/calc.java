@@ -1,4 +1,3 @@
-package src;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -6,7 +5,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
-public class Calc extends JFrame implements ActionListener{
+public class calc extends JFrame implements ActionListener{
     private String[] buttonLabels = {
             "7", "8", "9", "/",
             "4", "5", "6", "*",
@@ -21,7 +20,7 @@ public class Calc extends JFrame implements ActionListener{
     private boolean isOperatorClicked = false;
 
 
-    public Calc() {
+    public calc() {
         setTitle("Calculator");
         setLayout(new BorderLayout());
         setSize(400, 500);
@@ -99,7 +98,7 @@ public class Calc extends JFrame implements ActionListener{
 
     }
     public static void main(String[] args) {
-        Calc login = new Calc();
+        calc login = new calc();
         login.setVisible(true);
     }
 

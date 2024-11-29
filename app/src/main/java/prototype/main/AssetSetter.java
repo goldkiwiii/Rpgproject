@@ -18,10 +18,15 @@ public class AssetSetter {
 
         gp.obj[1] = new OBJ_Door(gp);
         gp.obj[1].worldX = 10 * gp.tileSize;
-        gp.obj[1].worldY = 11 * gp.tileSize;
+        gp.obj[1].worldY = 12 * gp.tileSize;
 
         gp.obj[2] = new OBJ_Chest(gp);
         gp.obj[2].worldX = 9 * gp.tileSize;
         gp.obj[2].worldY = 8 * gp.tileSize;
+    }
+    public void setNPC(){
+////        gp.npc[0] = new NPC_OldMan(gp);
+//        gp.npc[0].worldX = gp.tileSize * 21;
+//        gp.npc[0].worldY = gp.tileSize * 21;
     }
 }
