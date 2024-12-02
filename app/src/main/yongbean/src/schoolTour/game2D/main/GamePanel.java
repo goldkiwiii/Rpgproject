@@ -8,7 +8,7 @@ import java.awt.*;
 
 public class GamePanel extends JPanel implements Runnable {
 
-    //SCREEN SETTINGS
+    // SCREEN SETTINGS
 
     final int originalTileSize = 16;    // Single tile = 16x16 -> standard size for any ritual 2D                                       game
     final int scale = 3;    // rescale the tile size into appropriate scale
@@ -18,6 +18,12 @@ public class GamePanel extends JPanel implements Runnable {
     public final int maxScreenRow = 12;
     public final int screenWidth = tileSize * maxScreenCol;    // 768 pixels
     public final int screenHeight = tileSize * maxScreenRow;   // 576 pixels
+
+    // WORLD SETTINGS
+    public final int maxWorldCol = 50;
+    public final int maxWorldRow = 50;
+    public final int worldWidth = tileSize * maxWorldCol;
+    public final int worldHeight = tileSize * maxWorldRow;
 
 //    FPS
     int fps = 60;
@@ -29,9 +35,13 @@ public class GamePanel extends JPanel implements Runnable {
     KeyHandler keyHandler = new KeyHandler();
 
     // player
-    Player player = new Player(this, keyHandler);
+    public Player player = new Player(this, keyHandler);
 
+    // tileManager class to use
     TileManager tileManager = new TileManager(this);
+
+    // class to check the collision in gamePanel
+    public CollisionChecker collisionChecker = new CollisionChecker(this);
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
