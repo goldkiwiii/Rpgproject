@@ -81,7 +81,6 @@ public class Player extends Entity{
             //check tile collision
             collisionOn = false;
             gp.cChecker.checkTile(this);
-
             //check object Collision
             int ObjIndex =  gp.cChecker.checkObject(this, true);
             pickUpObject(ObjIndex);
@@ -124,11 +123,12 @@ public class Player extends Entity{
     }
     public void interactNPC(int i){
         if (i != 999) {
-            System.out.println("you are hitting NPC");
+            if (gp.keyH.EnterPressed == true) {
+                gp.gameState = gp.dialogueState;
+                gp.npc[i].speak();
+            }
         }
-
-
-
+        gp.keyH.EnterPressed = false;
     }
     public void draw(Graphics2D g2){
         //describe walking
