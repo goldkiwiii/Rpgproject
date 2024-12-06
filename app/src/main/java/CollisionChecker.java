@@ -1,4 +1,3 @@
-package schoolTour.game2D.main;
 
 import schoolTour.game2D.entity.Entity;
 
