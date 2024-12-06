@@ -6,6 +6,7 @@ import prototype.main.UtilityTool;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
+import java.util.Random;
 
 public class SuperObject {
     public BufferedImage image;
@@ -18,6 +19,10 @@ public class SuperObject {
     UtilityTool uTool = new UtilityTool();
 
 
+    public void update(){
+
+    }
+
     public void draw(Graphics2D g2, GamePanel gp){
         int screenX = worldX - gp.player.worldX + gp.player.screenX;
         int screenY = worldY - gp.player.worldY + gp.player.screenY;
@@ -29,5 +34,7 @@ public class SuperObject {
             //draw background when camera is on character because of efficient
             g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
         }
+
+
     }
 }
